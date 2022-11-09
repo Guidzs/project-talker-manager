@@ -1,4 +1,4 @@
-const { readFile } = require('fs').promises;
+const { readFile, writeFile } = require('fs').promises;
 const path = require('path');
 const crypto = require('crypto');
 
@@ -20,8 +20,20 @@ const getTalkerId = async (id) => {
   return talker;
 };
 
+const addTalker = async (talkerObjct) => {
+  const talkers = await getTalkers();
+  const actualId = talkers[talkers.length - 1].id;
+  const id = actualId + 1;
+  const newTalker = { id, ...talkerObjct };
+  talkers.push(newTalker);
+
+  await writeFile(talkerPath, JSON.stringify(talkers));
+  return newTalker;
+};
+
 module.exports = {
   createToken,
   getTalkers,
   getTalkerId,
+  addTalker,
 };
