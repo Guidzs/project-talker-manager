@@ -1,5 +1,10 @@
 const { readFile } = require('fs').promises;
 const path = require('path');
+const crypto = require('crypto');
+
+function createToken() {
+  return crypto.randomBytes(8).toString('hex');
+}
 
 const talkerPath = path.resolve(__dirname, '..', 'talker.json');
 
@@ -16,6 +21,7 @@ const getTalkerId = async (id) => {
 };
 
 module.exports = {
+  createToken,
   getTalkers,
   getTalkerId,
 };
