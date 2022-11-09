@@ -7,8 +7,7 @@ const router = express.Router();
 
 router.post('/', emailValidate, passwordValidate, async (_req, res) => {
   const token = createToken();
-
-  res.status(HTTP_OK_STATUS).json({ token })
+  res.status(HTTP_OK_STATUS).json({ token });
 });
 
 module.exports = router;
