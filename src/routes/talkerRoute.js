@@ -28,6 +28,15 @@ router.get('/', async (_req, res) => {
   res.status(HTTP_OK_STATUS).json(talkers);
 });
 
+router.get('/search', tokenValidate, async (req, res) => {
+  const { q } = req.query;
+  const talkers = await getTalkers();
+  const filterTalkers = talkers
+    .filter((t) => t.name.toLowerCase().includes(q.toLowerCase()));
+
+  res.status(HTTP_OK_STATUS).json(filterTalkers);
+});
+
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const talker = await getTalkerId(id);
