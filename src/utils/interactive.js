@@ -31,9 +31,20 @@ const addTalker = async (talkerObjct) => {
   return newTalker;
 };
 
+const replaceTalker = async (id, talkerObjct) => {
+  const talkers = await getTalkers();
+  const newTalker = { id, ...talkerObjct };
+  const oldTalkers = talkers.filter((t) => t.id !== id);
+  oldTalkers.push(newTalker);
+
+  await writeFile(talkerPath, JSON.stringify(oldTalkers));
+  return newTalker;
+};
+
 module.exports = {
   createToken,
   getTalkers,
   getTalkerId,
   addTalker,
+  replaceTalker,
 };

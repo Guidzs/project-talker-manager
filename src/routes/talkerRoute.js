@@ -11,6 +11,7 @@ const {
   getTalkers,
   getTalkerId,
   addTalker,
+  replaceTalker,
 } = require('../utils/interactive');
 const {
   HTTP_OK_STATUS,
@@ -47,6 +48,22 @@ async (req, res) => {
   const talkerObjct = req.body;
   const newTalker = await addTalker(talkerObjct);
   return res.status(HTTP_CREATED_STATUS).json(newTalker);
+});
+
+router.put('/:id',
+tokenValidate,
+nameValidate,
+ageValidate,
+talkValidate,
+watchedAtValidate,
+rateValidation,
+async (req, res) => {
+  const { id } = req.params;
+  const talkerObjct = req.body;
+
+  const newTalker = await replaceTalker(Number(id), talkerObjct);
+
+  res.status(HTTP_OK_STATUS).json(newTalker);
 });
 
 module.exports = router;
