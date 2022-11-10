@@ -12,11 +12,13 @@ const {
   getTalkerId,
   addTalker,
   replaceTalker,
+  deleteTalker,
 } = require('../utils/interactive');
 const {
   HTTP_OK_STATUS,
   HTTP_CREATED_STATUS,
   HTTP_NOT_FOUND_STATUS,
+  HTTP_NO_CONTENT_STATUS,
 } = require('../utils/status');
 
 const router = express.Router();
@@ -64,6 +66,13 @@ async (req, res) => {
   const newTalker = await replaceTalker(Number(id), talkerObjct);
 
   res.status(HTTP_OK_STATUS).json(newTalker);
+});
+
+router.delete('/:id', tokenValidate, async (req, res) => {
+  const { id } = req.params;
+  deleteTalker(Number(id));
+
+  res.status(HTTP_NO_CONTENT_STATUS).send();
 });
 
 module.exports = router;
